@@ -22,7 +22,7 @@ func main() {
 			logger.Printf("Got an error: %s", err)
 			continue
 		}
-		handleMessage(logger, method, contents) //FIX:rewrite the decode function if needed
+		handleMessage(logger, method, contents)
 	}
 }
 func handleMessage(logger *log.Logger, method string, contents []byte) {
@@ -34,9 +34,9 @@ func handleMessage(logger *log.Logger, method string, contents []byte) {
 			logger.Printf("We couldn't parse this: %s", err)
 		}
 		logger.Printf("Connected to: %s %s",
-			request.Params.ClientInfo.Name,
-			request.Params.ClientInfo.Version,
-		)
+    request.Params.ClientInfo.Name,
+    request.Params.ClientInfo.Version,
+  )
 	}
 }
 
@@ -47,3 +47,4 @@ func getLogger(filename string) *log.Logger {
 	}
 	return log.New(logfile, "[educationalsp]", log.Ldate|log.Ltime|log.Lshortfile)
 }
+//TODO: from 45:38
