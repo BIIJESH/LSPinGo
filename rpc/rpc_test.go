@@ -28,5 +28,4 @@ func TestDecode(t *testing.T) {
 	if method != "hi" {
 		t.Fatalf("Expected: 'hi', Got: %s", method)
 	}
-
 }
