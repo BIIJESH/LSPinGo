@@ -34,9 +34,14 @@ func handleMessage(logger *log.Logger, method string, contents []byte) {
 			logger.Printf("We couldn't parse this: %s", err)
 		}
 		logger.Printf("Connected to: %s %s",
-    request.Params.ClientInfo.Name,
-    request.Params.ClientInfo.Version,
-  )
+			request.Params.ClientInfo.Name,
+			request.Params.ClientInfo.Version,
+		)
+		msg := lsp.NewInitializeResponse(request.ID)
+		reply := rpc.EncodeMessage(msg)
+		writer := os.Stdout
+		writer.Write([]byte(reply))
+    logger.Print("Sent the reply")
 	}
 }
 
@@ -47,4 +52,5 @@ func getLogger(filename string) *log.Logger {
 	}
 	return log.New(logfile, "[educationalsp]", log.Ldate|log.Ltime|log.Lshortfile)
 }
+
 //TODO: from 45:38
