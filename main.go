@@ -67,14 +67,20 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 		//Create a response and write it back
 		response := state.Hover(request.ID, request.Params.TextDocument.URI, request.Params.Position)
 		writeResponse(writer, response)
-    case "textDocument/definition": //FIX:write the definition better thinking of highlighting the matching strings 
+	case "textDocument/definition": //TODO:write the definition better thinking of highlighting the matching strings
 		var request lsp.DefinitionRequest
 		if err := json.Unmarshal(contents, &request); err != nil {
 			logger.Printf("textDocument/definition: %s", err)
 			return
 		}
+	case "textDocument/codeAction":
+		var request lsp.CodeActionRequest
+		if err := json.Unmarshal(contents, &request); err != nil {
+			logger.Printf("textDocument/codeAction: %s", err)
+			return
+		}
 		//Create a response and write it back
-		response := state.Definition(request.ID, request.Params.TextDocument.URI, request.Params.Position)
+		response := state.TextDocumentCodeAction(request.ID, request.Params.TextDocument.URI)
 		writeResponse(writer, response)
 	}
 }
