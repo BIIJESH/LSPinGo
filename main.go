@@ -79,8 +79,14 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 			logger.Printf("textDocument/codeAction: %s", err)
 			return
 		}
+	case "textDocument/completion":
+		var request lsp.CompletionRequest
+		if err := json.Unmarshal(contents, &request); err != nil {
+			logger.Printf("textDocument/completion: %s", err)
+			return
+		}
 		//Create a response and write it back
-		response := state.TextDocumentCodeAction(request.ID, request.Params.TextDocument.URI)
+		response := state.TextDocumentCompletion(request.ID, request.Params.TextDocument.URI)
 		writeResponse(writer, response)
 	}
 }
@@ -96,3 +102,5 @@ func getLogger(filename string) *log.Logger {
 	}
 	return log.New(logfile, "[educationalsp]", log.Ldate|log.Ltime|log.Lshortfile)
 }
+
+//TODO:from 1:40:13
