@@ -24,6 +24,8 @@ type InitializeResult struct {
 }
 
 type ServerCapabilities struct {
+	TextDocumentSync int  `json:"textDocumentSync"`
+  HoverProvider    bool `json:"hoverProvider"` //BUG:hover bug was here there was a typo error
 }
 
 type ServerInfo struct {
@@ -38,7 +40,10 @@ func NewInitializeResponse(id int) InitializeResponse {
 			ID:  &id,
 		},
 		Result: InitializeResult{
-			Capabilities: ServerCapabilities{},
+			Capabilities: ServerCapabilities{
+				TextDocumentSync: 1,
+				HoverProvider:    true,
+			},
 			ServerInfo: ServerInfo{
 				Name:    "educationalsp",
 				Version: "0.0.0.0.0.0-beta1.final",
